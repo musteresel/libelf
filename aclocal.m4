@@ -246,7 +246,7 @@ AC_DEFUN(mr_ENABLE_SHARED, [
 	    fi
 	    SHLINK_SFX='.so'
 	    SONAME_SFX='.so.$(MAJOR)'
-	    LINK_SHLIB='$(CC) -shared -Wl,-soname,$(SONAME)'
+	    LINK_SHLIB='$(CC) $(CFLAGS) -shared -Wl,-soname,$(SONAME)'
 	    INSTALL_SHLIB='$(INSTALL_PROGRAM)'
 	    DEPSHLIBS='-lc'
 	  else

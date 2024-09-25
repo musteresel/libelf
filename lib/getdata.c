@@ -136,12 +136,12 @@ elf_getdata(Elf_Scn *scn, Elf_Data *data) {
 	    /* already cooked */
 	    return &sd->sd_data;
 	}
-	else if (scn->s_offset < 0 || scn->s_offset > elf->e_size) {
-	    seterr(ERROR_OUTSIDE);
-	}
 	else if (scn->s_type == SHT_NOBITS || !scn->s_size) {
 	    /* no data to read */
 	    return &sd->sd_data;
+	}
+	else if (scn->s_offset < 0 || scn->s_offset > elf->e_size) {
+	    seterr(ERROR_OUTSIDE);
 	}
 	else if (scn->s_offset + scn->s_size > elf->e_size) {
 	    seterr(ERROR_TRUNC_SCN);

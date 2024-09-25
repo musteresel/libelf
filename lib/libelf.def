@@ -80,3 +80,6 @@ EXPORTS
 	elf_getshnum
 	elf_getshstrndx
 	elfx_update_shstrndx
+	elf_getphdrnum
+	elf_getshdrnum
+	elf_getshdrstrndx

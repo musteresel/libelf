@@ -907,25 +907,31 @@ xwrite(int fd, char *buffer, size_t len) {
     return 0;
 }
 
+static int
+xftruncate(int fd, off_t length) {
+#if defined(_WIN32)
+    return _chsize_s(fd, length) == 0 ? 0 : -1;
+#elif HAVE_FTRUNCATE
+    return ftruncate(fd, length);
+#else
+    errno = EIO;
+    return -1;
+#endif /* defined(_WIN32) */
+}
+
 static off_t
 _elf_output(Elf *elf, int fd, size_t len, off_t (*_elf_write)(Elf*, char*, size_t)) {
     char *buf;
     off_t err;
 
     elf_assert(len);
-#if HAVE_FTRUNCATE
-    ftruncate(fd, 0);
-#endif /* HAVE_FTRUNCATE */
+    xftruncate(fd, 0);
 #if HAVE_MMAP
     /*
      * Make sure the file is (at least) len bytes long
      */
-#if HAVE_FTRUNCATE
     lseek(fd, (off_t)len, SEEK_SET);
-    if (ftruncate(fd, len)) {
-#else /* HAVE_FTRUNCATE */
-    {
-#endif /* HAVE_FTRUNCATE */
+    if (xftruncate(fd, len)) {
 	if (lseek(fd, (off_t)len - 1, SEEK_SET) != (off_t)len - 1) {
 	    seterr(ERROR_IO_SEEK);
 	    return -1;

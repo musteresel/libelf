@@ -36,10 +36,20 @@ INSTALL =
 INSTALL_DATA = 
 INSTALL_PROGRAM = 
 
-CFLAGS = /O2 /W2 /TC /MD
+!IF "$(DEBUG)" == ""
+DEBUG=0
+!ENDIF
+
+!IF "$(DEBUG)" == "0"
+CFLAGS = /O2 /W2 /MD /Zi
+TARGETNAME=libelf
+!ELSE
+CFLAGS = /Od /W2 /MDd /Zi /D _DEBUG
+TARGETNAME=libelf-debug
+!ENDIF
 CPPFLAGS = 
 DEFS = /DHAVE_CONFIG_H
-LDFLAGS = 
+LDFLAGS = /DYNAMICBASE /NXCOMPAT /DEBUG
 LIBS = 
 DEPSHLIBS = 
 
@@ -50,9 +60,9 @@ SHLINK_SFX =
 SONAME_SFX = 
 LINK_SHLIB = $(LD) /DLL $(LDFLAGS)
 
-SHLIB = libelf$(SHLIB_SFX)
-SHLINK = libelf$(SHLINK_SFX)
-SONAME = libelf$(SONAME_SFX)
+SHLIB = $(TARGETNAME)$(SHLIB_SFX)
+SHLINK = $(TARGETNAME)$(SHLINK_SFX)
+SONAME = $(TARGETNAME)$(SONAME_SFX)
 
 # install includes in includedir?
 DO_COMPAT = 
@@ -135,17 +145,20 @@ all: $(OBJS) $(SHLIB)
 
 check:
 
-$(SHLIB): libelf.def $(OBJS) $(LIBOBJS)
+$(SHLIB): $(TARGETNAME).def $(OBJS) $(LIBOBJS)
 	-@$(RM) $(SHLIB)
-	$(LINK_SHLIB) /OUT:"$(SHLIB)" /DEF:"libelf.def" $(OBJS) $(LIBOBJS) kernel32.lib
+	$(LINK_SHLIB) /OUT:"$(SHLIB)" /DEF:"$(TARGETNAME).def" /MANIFEST:EMBED $(OBJS) $(LIBOBJS) kernel32.lib
 
 install:
 
 mostlyclean:
 	-$(RM) *.obj
+	-$(RM) $(TARGETNAME).ilk
 	-$(RM) $(SHLIB)
-	-$(RM) libelf.lib
-	-$(RM) libelf.exp
+	-$(RM) $(TARGETNAME).lib
+	-$(RM) $(TARGETNAME).exp
+	-$(RM) $(TARGETNAME).pdb
+	-$(RM) vc*.pdb
 
 clean: mostlyclean
 
