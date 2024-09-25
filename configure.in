@@ -282,7 +282,7 @@ extern void bcopy();
 #define memmove(d,s,n) bcopy((s),(d),(n))
 #endif
 extern int strcmp();
-main() {
+int main() {
   char buf[] = "0123456789";
   memmove(buf + 1, buf, 9);
   if (strcmp(buf, "0012345678")) exit(1);

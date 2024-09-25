@@ -68,7 +68,7 @@
 #ifdef __LIBELF_HEADER_ELF_H
 # include __LIBELF_HEADER_ELF_H
 #else /* __LIBELF_HEADER_ELF_H */
-# if __LIBELF_INTERNAL__
+# if defined(__LIBELF_INTERNAL__)
 #  include <elf_repl.h>
 # else /* __LIBELF_INTERNAL__ */
 #  include <libelf/elf_repl.h>
@@ -92,7 +92,7 @@
 #  define STN_UNDEF	0
 # endif /* STN_UNDEF */
 
-# if __LIBELF64
+# if defined(__LIBELF64)
 
 #  ifndef ELF64_FSZ_ADDR
 #   define ELF64_FSZ_ADDR	8
@@ -116,7 +116,7 @@
 #   define ELF64_R_INFO(s,t)	(((Elf64_Xword)(s)<<32)+((t)&0xffffffffL))
 #  endif /* ELF64_R_SYM */
 
-#  if __LIBELF64_LINUX
+#  if defined(__LIBELF64_LINUX)
 typedef __libelf_u64_t	Elf64_Addr;
 typedef __libelf_u16_t	Elf64_Half;
 typedef __libelf_u64_t	Elf64_Off;

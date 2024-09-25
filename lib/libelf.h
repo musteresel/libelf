@@ -25,7 +25,7 @@
 #include <stddef.h>	/* for size_t */
 #include <sys/types.h>
 
-#if __LIBELF_INTERNAL__
+#if defined(__LIBELF_INTERNAL__)
 #include <sys_elf.h>
 #else /* __LIBELF_INTERNAL__ */
 #include <libelf/sys_elf.h>
@@ -224,7 +224,7 @@ extern Elf_Data *elf32_xlatetom __P((Elf_Data *__dst, const Elf_Data *__src,
  */
 extern long elf32_checksum __P((Elf *__elf));
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 /*
  * 64-bit ELF functions
  * Not available on all platforms

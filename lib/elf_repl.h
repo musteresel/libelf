@@ -45,7 +45,7 @@ typedef __libelf_u32_t		Elf32_Word;
 #define ELF32_FSZ_SWORD		4
 #define ELF32_FSZ_WORD		4
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 
 typedef __libelf_u64_t		Elf64_Addr;
 typedef __libelf_u16_t		Elf64_Half;
@@ -93,7 +93,7 @@ typedef struct {
     Elf32_Half		e_shstrndx;
 } Elf32_Ehdr;
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 typedef struct {
     unsigned char	e_ident[EI_NIDENT];
     Elf64_Half		e_type;
@@ -307,7 +307,7 @@ typedef struct {
     Elf32_Word		sh_entsize;
 } Elf32_Shdr;
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 typedef struct {
     Elf64_Word		sh_name;
     Elf64_Word		sh_type;
@@ -434,7 +434,7 @@ typedef struct {
     Elf32_Half		st_shndx;
 } Elf32_Sym;
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 typedef struct {
     Elf64_Word		st_name;
     unsigned char	st_info;
@@ -457,7 +457,7 @@ typedef struct {
 #define ELF32_ST_TYPE(i)	((i)&0xf)
 #define ELF32_ST_INFO(b,t)	(((b)<<4)+((t)&0xf))
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 #define ELF64_ST_BIND(i)	((i)>>4)
 #define ELF64_ST_TYPE(i)	((i)&0xf)
 #define ELF64_ST_INFO(b,t)	(((b)<<4)+((t)&0xf))
@@ -495,7 +495,7 @@ typedef struct {
  * Macros for manipulating st_other
  */
 #define ELF32_ST_VISIBILITY(o)	((o)&0x3)
-#if __LIBELF64
+#if defined(__LIBELF64)
 #define ELF64_ST_VISIBILITY(o)	((o)&0x3)
 #endif /* __LIBELF64 */
 
@@ -521,7 +521,7 @@ typedef struct {
     Elf32_Sword		r_addend;
 } Elf32_Rela;
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 typedef struct {
     Elf64_Addr		r_offset;
     Elf64_Xword		r_info;
@@ -541,7 +541,7 @@ typedef struct {
 #define ELF32_R_TYPE(i)		((unsigned char)(i))
 #define ELF32_R_INFO(s,t)	(((s)<<8)+(unsigned char)(t))
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 #define ELF64_R_SYM(i)		((Elf64_Xword)(i)>>32)
 #define ELF64_R_TYPE(i)		((i)&0xffffffffL)
 #define ELF64_R_INFO(s,t)	(((Elf64_Xword)(s)<<32)+((t)&0xffffffffL))
@@ -556,7 +556,7 @@ typedef struct {
     Elf32_Word		n_type;		/* descriptor type */
 } Elf32_Nhdr;
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 /* Solaris and GNU use this layout.  Be compatible. */
 /* XXX: Latest ELF specs say it's 64-bit!!! */
 typedef struct {
@@ -587,7 +587,7 @@ typedef struct {
     Elf32_Word		p_align;
 } Elf32_Phdr;
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 typedef struct {
     Elf64_Word		p_type;
     Elf64_Word		p_flags;
@@ -654,7 +654,7 @@ typedef struct {
     } d_un;
 } Elf32_Dyn;
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 typedef struct {
     Elf64_Sxword	d_tag;
     union {
@@ -798,7 +798,7 @@ typedef struct {
     Elf32_Half		si_flags;
 } Elf32_Syminfo;
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 typedef struct {
     Elf64_Half		si_boundto;
     Elf64_Half		si_flags;
@@ -863,7 +863,7 @@ typedef struct {
 
 typedef Elf32_Half	Elf32_Versym;
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 
 typedef struct {
     Elf64_Half		vd_version;
@@ -933,7 +933,7 @@ typedef Elf64_Half	Elf64_Versym;
 /*
  * Move section
  */
-#if __LIBELF64
+#if defined(__LIBELF64)
 
 typedef struct {
     Elf32_Lword		m_value;
@@ -973,7 +973,7 @@ typedef struct {
     } c_un;
 } Elf32_Cap;
 
-#if __LIBELF64
+#if defined(__LIBELF64)
 
 typedef struct {
     Elf64_Xword     	c_tag;
